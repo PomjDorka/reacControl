@@ -14,15 +14,22 @@ local function call(device, method, ...)
 end
 
 function matrix.read(device)
-    local percent = call(device, "getEnergyFilledPercentage") or 0
-    if percent <= 1 then
-        percent = percent * 100
+    local energy = call(device, "getEnergy") or 0
+    local capacity = call(device, "getEnergyCapacity")
+
+    if type(capacity) ~= "number" or capacity <= 0 then
+        capacity = call(device, "getMaxEnergy") or 0
+    end
+
+    local percent = 0
+    if capacity > 0 then
+        percent = (energy / capacity) * 100
     end
 
     return {
         percent = math.max(0, math.min(100, percent)),
-        energy = call(device, "getEnergy") or 0,
-        capacity = call(device, "getMaxEnergy") or 0
+        energy = energy,
+        capacity = capacity
     }
 end
 

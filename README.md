@@ -50,9 +50,13 @@ Change these values in config.lua if needed.
 
 ## Control model
 
-Set steamTarget to the desired reactor hot-fluid production rate in mB/t. The controller reads getHotFluidProducedLastTick and changes all control rod levels until reactor production approaches the target.
+The reactor is not regulated by steam production. In AUTO mode it is switched on or off by matrixStart and matrixStop.
 
-Control rod levels use floating point values. The default adjustment step is 0.1 percent. Smaller changes than 0.01 percent may have no practical effect in the mod.
+The monitor SETTINGS page changes matrixStart, matrixStop, and the common rpmTarget.
+
+The matrix percentage is calculated as getEnergy() / getEnergyCapacity() * 100. getMaxEnergy() is used as a compatibility fallback.
+
+The reactor display reads getFuelConsumedLastTick, getFuelTemperature, getControlRodLevel(0), and getActive.
 
 Set rpmTarget to one common RPM target. Each turbine changes its own fluid limit until it approaches the same RPM target.
 

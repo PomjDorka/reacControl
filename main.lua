@@ -10,7 +10,7 @@ config = storage.load(config)
 local hardware = devices.discover(config)
 local reactor = reactorModule.new(hardware.reactor)
 local message = "READY"
-local nextAuto = 0
+local page = "STATUS"
 
 local function setReactor(active)
     reactorModule.setActive(reactor, active)
@@ -54,15 +54,12 @@ local function draw()
     local matrixState = matrix.read(hardware.matrix)
     local reactorState = reactorModule.read(reactor)
     local turbineState = turbinesModule.read(hardware.turbines)
-    ui.draw(hardware.monitor, config, matrixState, reactorState, turbineState, message)
+    ui.draw(hardware.monitor, config, matrixState, reactorState, turbineState, message, page)
 end
 
 local function update()
-    reactorModule.updateRate(reactor)
     local matrixState = matrix.read(hardware.matrix)
-    local turbineState = turbinesModule.read(hardware.turbines)
     autoControl(matrixState)
-    reactorModule.regulate(reactor, config, reactor.steamRate)
     turbinesModule.regulate(hardware.turbines, config)
     draw()
 end
@@ -79,13 +76,18 @@ while true do
             p3,
             #hardware.turbines,
             config,
-            reactor,
             setReactor,
             setTurbines,
-            save
+            save,
+            page
         )
         if result then
-            message = result
+            if result == "STATUS" or result == "SETTINGS" then
+                page = result
+                message = "READY"
+            else
+                message = result
+            end
             draw()
         end
     elseif event == "timer" and p1 == timer then
