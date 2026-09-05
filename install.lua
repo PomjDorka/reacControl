@@ -33,7 +33,11 @@ for _, name in ipairs(files) do
     response.close()
 
     if fs.exists(name) then
-        fs.copy(name, backupDir .. "/" .. name .. ".bak")
+        local backupPath = backupDir .. "/" .. name .. ".bak"
+        if fs.exists(backupPath) then
+            fs.delete(backupPath)
+        end
+        fs.copy(name, backupPath)
         print("Backed up " .. name)
     end
 
