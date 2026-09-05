@@ -1,4 +1,4 @@
-local baseUrl = "https://raw.githubusercontent.com/USERNAME/REPOSITORY/main"
+local baseUrl = "https://raw.githubusercontent.com/PomjDorka/reacControl/main"
 
 local files = {
     "config.lua",
