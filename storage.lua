@@ -22,6 +22,10 @@ function storage.load(config)
         config.mode = "MANUAL"
     end
 
+    if type(config.rodStep) ~= "number" or config.rodStep >= 1 then
+        config.rodStep = 0.1
+    end
+
     return config
 end
 

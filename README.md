@@ -52,6 +52,8 @@ Change these values in config.lua if needed.
 
 Set steamTarget to the desired reactor hot-fluid production rate in mB/t. The controller reads getHotFluidProducedLastTick and changes all control rod levels until reactor production approaches the target.
 
+Control rod levels use floating point values. The default adjustment step is 0.1 percent. Smaller changes than 0.01 percent may have no practical effect in the mod.
+
 Set rpmTarget to one common RPM target. Each turbine changes its own fluid limit until it approaches the same RPM target.
 
 The reactor uses setAllControlRodLevels, which changes every control rod in the reactor together.

@@ -27,7 +27,7 @@ function ui.draw(monitor, config, matrixState, reactorState, turbineState, messa
     monitor.setCursorPos(1, 6)
     monitor.write("STEAM: " .. reactorState.steamRate .. "/" .. config.steamTarget)
     monitor.setCursorPos(1, 7)
-    monitor.write(string.format("RODS: %5.1f%%", reactorState.rods))
+    monitor.write(string.format("RODS: %6.2f%%", reactorState.rods))
     monitor.setCursorPos(1, 8)
     monitor.write("REACTOR: " .. (reactorState.active and "ON" or "OFF"))
     monitor.setCursorPos(1, 9)
