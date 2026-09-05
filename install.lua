@@ -11,10 +11,8 @@ local files = {
     "main.lua"
 }
 
-local backupDir = "reactor_backup"
-
-if not fs.exists(backupDir) then
-    fs.makeDir(backupDir)
+if fs.exists("reactor_backup") then
+    fs.delete("reactor_backup")
 end
 
 if not http then
@@ -33,12 +31,8 @@ for _, name in ipairs(files) do
     response.close()
 
     if fs.exists(name) then
-        local backupPath = backupDir .. "/" .. name .. ".bak"
-        if fs.exists(backupPath) then
-            fs.delete(backupPath)
-        end
-        fs.copy(name, backupPath)
-        print("Backed up " .. name)
+        fs.delete(name)
+        print("Removed old " .. name)
     end
 
     local file = fs.open(name, "w")
