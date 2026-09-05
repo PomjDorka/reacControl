@@ -61,13 +61,8 @@ local function update()
     reactorModule.updateRate(reactor)
     local matrixState = matrix.read(hardware.matrix)
     local turbineState = turbinesModule.read(hardware.turbines)
-    local measuredSteam = 0
-    for _, turbine in ipairs(turbineState) do
-        measuredSteam = measuredSteam + turbine.input
-    end
-    reactor.steamRate = measuredSteam
     autoControl(matrixState)
-    reactorModule.regulate(reactor, config, measuredSteam)
+    reactorModule.regulate(reactor, config, reactor.steamRate)
     turbinesModule.regulate(hardware.turbines, config)
     draw()
 end

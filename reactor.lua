@@ -43,6 +43,13 @@ function reactor.setActive(state, active)
 end
 
 function reactor.updateRate(state)
+    local produced = call(state.device, "getHotFluidProducedLastTick")
+
+    if type(produced) == "number" then
+        state.steamRate = math.max(0, produced)
+        return
+    end
+
     local hot = call(state.device, "getHotFluidAmount") or 0
     local now = os.clock()
 

@@ -50,7 +50,7 @@ Change these values in config.lua if needed.
 
 ## Control model
 
-Set steamTarget to the desired total steam input rate for all active turbines. The controller changes all control rod levels until the measured turbine input approaches the target.
+Set steamTarget to the desired reactor hot-fluid production rate in mB/t. The controller reads getHotFluidProducedLastTick and changes all control rod levels until reactor production approaches the target.
 
 Set rpmTarget to one common RPM target. Each turbine changes its own fluid limit until it approaches the same RPM target.
 
