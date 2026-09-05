@@ -81,14 +81,27 @@ function reactor.regulate(state, config, measuredSteam)
 end
 
 function reactor.read(state)
+    local active = call(state.device, "getActive")
+    local rods = call(state.device, "getControlRodLevel")
     local temperature = call(state.device, "getFuelTemperature") or 0
     local fuel = call(state.device, "getFuelAmount") or 0
+    local energy = call(state.device, "getEnergyStored") or 0
+
+    if type(active) == "boolean" then
+        state.active = active
+    end
+
+    if type(rods) == "number" then
+        state.rods = clamp(rods, 0, 100)
+    end
+
     return {
         active = state.active,
         rods = state.rods,
         steamRate = state.steamRate,
         temperature = temperature,
-        fuel = fuel
+        fuel = fuel,
+        energy = energy
     }
 end
 

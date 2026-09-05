@@ -58,13 +58,19 @@ function turbines.read(list)
     local result = {}
 
     for index, turbine in ipairs(list) do
+        local active = call(turbine.device, "getActive")
+        local coils = call(turbine.device, "getInductorEngaged")
         result[index] = {
             name = turbine.name,
             rpm = call(turbine.device, "getRotorSpeed") or 0,
             input = call(turbine.device, "getInputAmount") or 0,
+            energy = call(turbine.device, "getEnergyStored") or 0,
             flow = turbine.flow,
-            active = turbine.active
+            active = type(active) == "boolean" and active or turbine.active,
+            coils = type(coils) == "boolean" and coils or false
         }
+
+        turbine.active = result[index].active
     end
 
     return result

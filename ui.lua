@@ -32,10 +32,12 @@ function ui.draw(monitor, config, matrixState, reactorState, turbineState, messa
     monitor.write("REACTOR: " .. (reactorState.active and "ON" or "OFF"))
     monitor.setCursorPos(1, 9)
     monitor.write("TEMP: " .. reactorState.temperature)
-    monitor.setCursorPos(1, 11)
+    monitor.setCursorPos(1, 10)
+    monitor.write("FUEL: " .. reactorState.fuel)
+    monitor.setCursorPos(1, 12)
     monitor.write("RPM TARGET: " .. config.rpmTarget)
 
-    local row = 12
+    local row = 13
     for index, turbine in ipairs(turbineState) do
         monitor.setCursorPos(1, row)
         monitor.write(string.format("T%-2d %4d RPM %s", index, turbine.rpm, turbine.active and "ON" or "OFF"))
@@ -57,7 +59,7 @@ function ui.draw(monitor, config, matrixState, reactorState, turbineState, messa
 end
 
 function ui.handleTouch(x, y, turbineCount, config, reactorState, setReactor, setTurbines, save)
-    local row = 12 + turbineCount
+    local row = 13 + turbineCount
 
     if y == row + 1 then
         if x <= 8 then

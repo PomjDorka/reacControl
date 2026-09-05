@@ -37,8 +37,8 @@ Then run:
 
     main
 
-The installer updates existing Lua files and saves their previous versions in
-the reactor_backup folder. The reactor.cfg file is preserved.
+The installer removes existing Lua files before downloading new versions. The
+reactor.cfg file is preserved.
 
 ## Default hardware names
 
